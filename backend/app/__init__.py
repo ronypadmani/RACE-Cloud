@@ -34,18 +34,22 @@ def create_app():
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(
         hours=int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', '24'))
     )
-    app.config['DATABASE_PATH'] = os.path.join(
-        app.instance_path,
-        os.getenv('DATABASE_PATH', 'racecloud.db')
-    )
+    # On Vercel the env var is an absolute path (/tmp/racecloud.db);
+    # locally it is relative to instance_path.
+    _db_env = os.getenv('DATABASE_PATH', 'racecloud.db')
+    if os.path.isabs(_db_env):
+        app.config['DATABASE_PATH'] = _db_env
+    else:
+        app.config['DATABASE_PATH'] = os.path.join(app.instance_path, _db_env)
     app.config['FERNET_KEY'] = os.getenv('FERNET_ENCRYPTION_KEY', '')
 
     # Ensure instance folder exists
     os.makedirs(app.instance_path, exist_ok=True)
 
     # ── Extensions ─────────────────────────────────────────────
+    _allowed_origins = os.getenv('FRONTEND_URL', 'http://localhost:3000')
     CORS(app, resources={r"/api/*": {
-        "origins": os.getenv('FRONTEND_URL', 'http://localhost:3000'),
+        "origins": [o.strip() for o in _allowed_origins.split(',')],
         "supports_credentials": True
     }})
     JWTManager(app)
