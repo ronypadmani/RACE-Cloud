@@ -1,0 +1,183 @@
+/* ── IAM Guide Page ─────────────────────────────────────────── */
+.iam-guide-page {
+  max-width: 800px;
+}
+
+.guide-section {
+  margin-bottom: 20px;
+}
+
+.guide-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--gray-800);
+}
+
+.prereq-list, .notes-list, .security-list {
+  list-style: none;
+  padding: 0;
+}
+
+.prereq-list li, .security-list li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--gray-700);
+}
+
+.prereq-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success-500);
+  font-weight: 700;
+}
+
+.security-list li::before {
+  content: '🔒';
+  position: absolute;
+  left: 0;
+}
+
+.notes-list li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--warning-600);
+}
+
+.notes-list li::before {
+  content: '!';
+  position: absolute;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--warning-500);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.warning-card {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+/* ── Steps ─────────────────────────────────────────────────── */
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.step-card {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+}
+
+.step-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  min-width: 44px;
+  width: 44px;
+  padding-top: 2px;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  background: var(--primary-600, #2563eb);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.step-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.step-body {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.step-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-800, #1e293b);
+  word-wrap: break-word;
+}
+
+.step-description {
+  font-size: 14px;
+  color: var(--gray-700);
+  margin-bottom: 6px;
+}
+
+.step-details {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+.step-policies {
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--gray-50);
+  border-radius: 8px;
+}
+
+.step-policies h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--gray-700);
+}
+
+.policy-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.policy-item code {
+  background: var(--primary-100);
+  color: var(--primary-800);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.policy-item span {
+  color: var(--gray-600);
+}
+
+.security-section {
+  background: var(--primary-50);
+  border-color: var(--primary-100);
+}

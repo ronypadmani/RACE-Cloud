@@ -1,0 +1,156 @@
+/* =================================================================
+   RecommendationsPage.css — Professional recommendation cards
+   ================================================================= */
+
+.recommendations-page {
+  max-width: 960px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.recommendations-page .page-header {
+  margin-bottom: 24px;
+}
+
+.recommendations-page .page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--gray-900);
+  letter-spacing: -0.4px;
+  margin-bottom: 2px;
+}
+
+.recommendations-page .page-header p {
+  color: var(--gray-500);
+  font-size: 14px;
+}
+
+/* ── Filter Bar ────────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border-color: var(--gray-300);
+}
+
+.filter-btn.active {
+  background: var(--gray-900);
+  color: var(--white);
+  border-color: var(--gray-900);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+}
+
+/* ── Recommendation Cards ──────────────────────────────────── */
+.rec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rec-card {
+  border-left: 4px solid var(--gray-300);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.rec-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.rec-card.severity-high {
+  border-left-color: var(--danger-500);
+}
+
+.rec-card.severity-medium {
+  border-left-color: var(--warning-500);
+}
+
+.rec-card.severity-low {
+  border-left-color: var(--primary-500);
+}
+
+.rec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.rec-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rec-type {
+  font-size: 11px;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  background: var(--gray-100);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.rec-resource {
+  font-size: 12px;
+  background: var(--gray-100);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--accent-600);
+}
+
+.rec-savings {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--success-600);
+  white-space: nowrap;
+}
+
+.rec-text {
+  font-size: 14px;
+  color: var(--gray-700);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.rec-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-100);
+}
+
+.rec-rule {
+  font-size: 11px;
+  color: var(--gray-400);
+  font-family: 'Consolas', 'Menlo', monospace;
+  background: var(--gray-50);
+  padding: 2px 8px;
+  border-radius: 4px;
+}

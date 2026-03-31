@@ -1,0 +1,338 @@
+{
+  "ec2_instances": [
+    {
+      "instance_id": "i-demo-idle-001",
+      "name": "forgotten-dev-server",
+      "instance_type": "t3.large",
+      "state": "running",
+      "launch_time": "2025-04-15T09:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": "13.233.80.10",
+      "private_ip": "172.31.20.10",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-idle-002",
+      "name": "old-ci-runner",
+      "instance_type": "t3.medium",
+      "state": "running",
+      "launch_time": "2025-05-20T14:00:00Z",
+      "availability_zone": "ap-south-1b",
+      "public_ip": null,
+      "private_ip": "172.31.20.20",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-idle-003",
+      "name": "unused-ml-training",
+      "instance_type": "m5.xlarge",
+      "state": "running",
+      "launch_time": "2025-07-01T06:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": "13.233.80.30",
+      "private_ip": "172.31.20.30",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-idle-004",
+      "name": "prod-web-app",
+      "instance_type": "t3.small",
+      "state": "running",
+      "launch_time": "2025-09-10T10:00:00Z",
+      "availability_zone": "ap-south-1b",
+      "public_ip": "13.233.80.40",
+      "private_ip": "172.31.20.40",
+      "platform": "Linux",
+      "monitoring": "enabled"
+    },
+    {
+      "instance_id": "i-demo-idle-005",
+      "name": "zombie-worker",
+      "instance_type": "t3.medium",
+      "state": "stopped",
+      "launch_time": "2025-02-01T08:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": null,
+      "private_ip": "172.31.20.50",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    }
+  ],
+  "ebs_volumes": [
+    {
+      "volume_id": "vol-demo-idle-001",
+      "state": "in-use",
+      "size_gb": 80,
+      "volume_type": "gp2",
+      "attached_to": "i-demo-idle-001",
+      "attachments": [{"instance_id": "i-demo-idle-001"}],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-04-15T09:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-idle-002",
+      "state": "available",
+      "size_gb": 200,
+      "volume_type": "gp2",
+      "attached_to": null,
+      "attachments": [],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-03-01T00:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-idle-003",
+      "state": "available",
+      "size_gb": 100,
+      "volume_type": "gp2",
+      "attached_to": null,
+      "attachments": [],
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-01-20T00:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-idle-004",
+      "state": "available",
+      "size_gb": 50,
+      "volume_type": "io1",
+      "attached_to": null,
+      "attachments": [],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-05-05T00:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-idle-005",
+      "state": "in-use",
+      "size_gb": 30,
+      "volume_type": "gp3",
+      "attached_to": "i-demo-idle-004",
+      "attachments": [{"instance_id": "i-demo-idle-004"}],
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-09-10T10:00:00Z",
+      "encrypted": true
+    },
+    {
+      "volume_id": "vol-demo-idle-006",
+      "state": "in-use",
+      "size_gb": 50,
+      "volume_type": "gp2",
+      "attached_to": "i-demo-idle-005",
+      "attachments": [{"instance_id": "i-demo-idle-005"}],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-02-01T08:00:00Z",
+      "encrypted": false
+    }
+  ],
+  "elastic_ips": [
+    {
+      "public_ip": "13.233.80.10",
+      "allocation_id": "eipalloc-demo-idle-001",
+      "association_id": "eipassoc-demo-idle-001",
+      "instance_id": "i-demo-idle-001",
+      "is_associated": true,
+      "domain": "vpc"
+    },
+    {
+      "public_ip": "13.233.99.1",
+      "allocation_id": "eipalloc-demo-idle-002",
+      "association_id": null,
+      "instance_id": null,
+      "is_associated": false,
+      "domain": "vpc"
+    },
+    {
+      "public_ip": "13.233.99.2",
+      "allocation_id": "eipalloc-demo-idle-003",
+      "association_id": null,
+      "instance_id": null,
+      "is_associated": false,
+      "domain": "vpc"
+    }
+  ],
+  "s3_buckets": [
+    {
+      "bucket_name": "demo-idle-app-data",
+      "creation_date": "2025-06-01T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 5368709120,
+      "size_gb": 5.0,
+      "object_count": 3200
+    },
+    {
+      "bucket_name": "demo-idle-old-backups",
+      "creation_date": "2025-01-01T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 32212254720,
+      "size_gb": 30.0,
+      "object_count": 45000
+    }
+  ],
+  "rds_instances": [
+    {
+      "db_instance_id": "demo-idle-db-unused",
+      "db_instance_class": "db.t3.medium",
+      "engine": "mysql",
+      "engine_version": "8.0.35",
+      "status": "available",
+      "multi_az": false,
+      "storage_gb": 50,
+      "storage_type": "gp2",
+      "endpoint": "demo-idle-db-unused.abc123.ap-south-1.rds.amazonaws.com",
+      "port": 3306,
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-04-01T12:00:00Z"
+    }
+  ],
+  "cpu_metrics": {
+    "i-demo-idle-001": {
+      "instance_id": "i-demo-idle-001",
+      "avg_cpu": 0.4,
+      "max_cpu": 1.2,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-idle-002": {
+      "instance_id": "i-demo-idle-002",
+      "avg_cpu": 0.9,
+      "max_cpu": 1.8,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-idle-003": {
+      "instance_id": "i-demo-idle-003",
+      "avg_cpu": 0.2,
+      "max_cpu": 0.5,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-idle-004": {
+      "instance_id": "i-demo-idle-004",
+      "avg_cpu": 22.5,
+      "max_cpu": 48.0,
+      "datapoints": 336,
+      "period_days": 14
+    }
+  },
+  "s3_access": {
+    "demo-idle-app-data": {
+      "bucket_name": "demo-idle-app-data",
+      "total_requests_90d": 8000,
+      "days_since_last_access": 1,
+      "is_cold": false
+    },
+    "demo-idle-old-backups": {
+      "bucket_name": "demo-idle-old-backups",
+      "total_requests_90d": 5,
+      "days_since_last_access": 88,
+      "is_cold": true
+    }
+  },
+  "rds_connections": {
+    "demo-idle-db-unused": {
+      "db_instance_id": "demo-idle-db-unused",
+      "avg_connections": 0,
+      "max_connections": 0,
+      "period_days": 7,
+      "is_idle": true
+    }
+  },
+  "cost_data": {
+    "monthly_costs": [
+      {
+        "period_start": "2025-11",
+        "total_cost": 162.50,
+        "services": [
+          {"service": "Amazon EC2", "cost": 95.00},
+          {"service": "Amazon RDS", "cost": 25.50},
+          {"service": "Amazon S3", "cost": 18.00},
+          {"service": "AWS Data Transfer", "cost": 14.00},
+          {"service": "Amazon CloudWatch", "cost": 10.00}
+        ]
+      },
+      {
+        "period_start": "2025-12",
+        "total_cost": 168.20,
+        "services": [
+          {"service": "Amazon EC2", "cost": 100.20},
+          {"service": "Amazon RDS", "cost": 27.00},
+          {"service": "Amazon S3", "cost": 18.50},
+          {"service": "AWS Data Transfer", "cost": 12.50},
+          {"service": "Amazon CloudWatch", "cost": 10.00}
+        ]
+      },
+      {
+        "period_start": "2026-01",
+        "total_cost": 175.40,
+        "services": [
+          {"service": "Amazon EC2", "cost": 105.20},
+          {"service": "Amazon RDS", "cost": 28.50},
+          {"service": "Amazon S3", "cost": 18.70},
+          {"service": "AWS Data Transfer", "cost": 12.00},
+          {"service": "Amazon CloudWatch", "cost": 11.00}
+        ]
+      }
+    ],
+    "currency": "USD",
+    "total_period_cost": 506.10
+  },
+  "daily_costs": {
+    "daily_costs": [
+      {"date": "2026-01-20", "cost": 5.85},
+      {"date": "2026-01-19", "cost": 5.70},
+      {"date": "2026-01-18", "cost": 5.90},
+      {"date": "2026-01-17", "cost": 5.75},
+      {"date": "2026-01-16", "cost": 6.10},
+      {"date": "2026-01-15", "cost": 5.60},
+      {"date": "2026-01-14", "cost": 5.80},
+      {"date": "2026-01-13", "cost": 5.95},
+      {"date": "2026-01-12", "cost": 5.65},
+      {"date": "2026-01-11", "cost": 5.85},
+      {"date": "2026-01-10", "cost": 5.55},
+      {"date": "2026-01-09", "cost": 5.90},
+      {"date": "2026-01-08", "cost": 5.50},
+      {"date": "2026-01-07", "cost": 5.80},
+      {"date": "2026-01-06", "cost": 5.70},
+      {"date": "2026-01-05", "cost": 5.85},
+      {"date": "2026-01-04", "cost": 5.45},
+      {"date": "2026-01-03", "cost": 5.75},
+      {"date": "2026-01-02", "cost": 5.60},
+      {"date": "2026-01-01", "cost": 5.80},
+      {"date": "2025-12-31", "cost": 5.40},
+      {"date": "2025-12-30", "cost": 5.55},
+      {"date": "2025-12-29", "cost": 5.35},
+      {"date": "2025-12-28", "cost": 5.50},
+      {"date": "2025-12-27", "cost": 5.60},
+      {"date": "2025-12-26", "cost": 5.30},
+      {"date": "2025-12-25", "cost": 5.45},
+      {"date": "2025-12-24", "cost": 5.55},
+      {"date": "2025-12-23", "cost": 5.25},
+      {"date": "2025-12-22", "cost": 5.40}
+    ],
+    "period_days": 30
+  },
+  "service_breakdown": {
+    "period_days": 30,
+    "breakdown": [
+      {"service": "Amazon Elastic Compute Cloud", "cost": 105.20},
+      {"service": "Amazon Relational Database Service", "cost": 28.50},
+      {"service": "Amazon Simple Storage Service", "cost": 18.70},
+      {"service": "AWS Data Transfer", "cost": 12.00},
+      {"service": "Amazon Route 53", "cost": 5.50},
+      {"service": "Amazon CloudWatch", "cost": 5.50}
+    ],
+    "total_cost": 175.40
+  },
+  "region_breakdown": {
+    "period_days": 30,
+    "regions": [
+      {"region": "ap-south-1", "cost": 175.40}
+    ],
+    "total_cost": 175.40
+  }
+}

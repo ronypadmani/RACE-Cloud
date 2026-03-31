@@ -1,0 +1,357 @@
+{
+  "ec2_instances": [
+    {
+      "instance_id": "i-demo-hc-001",
+      "name": "monolith-app-server",
+      "instance_type": "m5.xlarge",
+      "state": "running",
+      "launch_time": "2025-06-10T09:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": "13.233.100.10",
+      "private_ip": "172.31.5.10",
+      "platform": "Linux",
+      "monitoring": "enabled"
+    },
+    {
+      "instance_id": "i-demo-hc-002",
+      "name": "staging-server-old",
+      "instance_type": "m5.large",
+      "state": "running",
+      "launch_time": "2025-03-20T14:00:00Z",
+      "availability_zone": "ap-south-1b",
+      "public_ip": "13.233.100.20",
+      "private_ip": "172.31.5.20",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-hc-003",
+      "name": "dev-test-box",
+      "instance_type": "t3.large",
+      "state": "running",
+      "launch_time": "2025-08-05T11:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": "13.233.100.30",
+      "private_ip": "172.31.5.30",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-hc-004",
+      "name": "legacy-batch-processor",
+      "instance_type": "c5.xlarge",
+      "state": "running",
+      "launch_time": "2025-01-15T06:00:00Z",
+      "availability_zone": "ap-south-1b",
+      "public_ip": null,
+      "private_ip": "172.31.5.40",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    },
+    {
+      "instance_id": "i-demo-hc-005",
+      "name": "abandoned-project",
+      "instance_type": "t3.medium",
+      "state": "stopped",
+      "launch_time": "2025-04-01T08:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": null,
+      "private_ip": "172.31.5.50",
+      "platform": "Linux",
+      "monitoring": "disabled"
+    }
+  ],
+  "ebs_volumes": [
+    {
+      "volume_id": "vol-demo-hc-001",
+      "state": "in-use",
+      "size_gb": 200,
+      "volume_type": "gp2",
+      "attached_to": "i-demo-hc-001",
+      "attachments": [{"instance_id": "i-demo-hc-001"}],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-06-10T09:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-hc-002",
+      "state": "in-use",
+      "size_gb": 100,
+      "volume_type": "gp2",
+      "attached_to": "i-demo-hc-002",
+      "attachments": [{"instance_id": "i-demo-hc-002"}],
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-03-20T14:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-hc-003",
+      "state": "available",
+      "size_gb": 500,
+      "volume_type": "gp2",
+      "attached_to": null,
+      "attachments": [],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-02-01T00:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-hc-004",
+      "state": "available",
+      "size_gb": 100,
+      "volume_type": "io1",
+      "attached_to": null,
+      "attachments": [],
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-04-10T00:00:00Z",
+      "encrypted": false
+    },
+    {
+      "volume_id": "vol-demo-hc-005",
+      "state": "in-use",
+      "size_gb": 50,
+      "volume_type": "gp2",
+      "attached_to": "i-demo-hc-005",
+      "attachments": [{"instance_id": "i-demo-hc-005"}],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-04-01T08:00:00Z",
+      "encrypted": false
+    }
+  ],
+  "elastic_ips": [
+    {
+      "public_ip": "13.233.100.10",
+      "allocation_id": "eipalloc-demo-hc-001",
+      "association_id": "eipassoc-demo-hc-001",
+      "instance_id": "i-demo-hc-001",
+      "is_associated": true,
+      "domain": "vpc"
+    },
+    {
+      "public_ip": "13.233.200.99",
+      "allocation_id": "eipalloc-demo-hc-002",
+      "association_id": null,
+      "instance_id": null,
+      "is_associated": false,
+      "domain": "vpc"
+    }
+  ],
+  "s3_buckets": [
+    {
+      "bucket_name": "demo-hc-app-logs",
+      "creation_date": "2025-03-01T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 107374182400,
+      "size_gb": 100.0,
+      "object_count": 2500000
+    },
+    {
+      "bucket_name": "demo-hc-backups-old",
+      "creation_date": "2025-01-15T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 53687091200,
+      "size_gb": 50.0,
+      "object_count": 85000
+    },
+    {
+      "bucket_name": "demo-hc-media-assets",
+      "creation_date": "2025-05-01T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 21474836480,
+      "size_gb": 20.0,
+      "object_count": 4200
+    }
+  ],
+  "rds_instances": [
+    {
+      "db_instance_id": "demo-hc-db-primary",
+      "db_instance_class": "db.m5.large",
+      "engine": "mysql",
+      "engine_version": "8.0.35",
+      "status": "available",
+      "multi_az": true,
+      "storage_gb": 200,
+      "storage_type": "gp2",
+      "endpoint": "demo-hc-db-primary.abc123.ap-south-1.rds.amazonaws.com",
+      "port": 3306,
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-03-01T10:00:00Z"
+    },
+    {
+      "db_instance_id": "demo-hc-db-staging",
+      "db_instance_class": "db.t3.medium",
+      "engine": "postgres",
+      "engine_version": "15.4",
+      "status": "available",
+      "multi_az": false,
+      "storage_gb": 50,
+      "storage_type": "gp2",
+      "endpoint": "demo-hc-db-staging.abc123.ap-south-1.rds.amazonaws.com",
+      "port": 5432,
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-05-10T14:00:00Z"
+    }
+  ],
+  "cpu_metrics": {
+    "i-demo-hc-001": {
+      "instance_id": "i-demo-hc-001",
+      "avg_cpu": 35.2,
+      "max_cpu": 72.8,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-hc-002": {
+      "instance_id": "i-demo-hc-002",
+      "avg_cpu": 1.2,
+      "max_cpu": 3.5,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-hc-003": {
+      "instance_id": "i-demo-hc-003",
+      "avg_cpu": 0.8,
+      "max_cpu": 2.1,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-hc-004": {
+      "instance_id": "i-demo-hc-004",
+      "avg_cpu": 1.5,
+      "max_cpu": 4.0,
+      "datapoints": 336,
+      "period_days": 14
+    }
+  },
+  "s3_access": {
+    "demo-hc-app-logs": {
+      "bucket_name": "demo-hc-app-logs",
+      "total_requests_90d": 150000,
+      "days_since_last_access": 0,
+      "is_cold": false
+    },
+    "demo-hc-backups-old": {
+      "bucket_name": "demo-hc-backups-old",
+      "total_requests_90d": 12,
+      "days_since_last_access": 75,
+      "is_cold": true
+    },
+    "demo-hc-media-assets": {
+      "bucket_name": "demo-hc-media-assets",
+      "total_requests_90d": 8500,
+      "days_since_last_access": 2,
+      "is_cold": false
+    }
+  },
+  "rds_connections": {
+    "demo-hc-db-primary": {
+      "db_instance_id": "demo-hc-db-primary",
+      "avg_connections": 18.3,
+      "max_connections": 45,
+      "period_days": 7,
+      "is_idle": false
+    },
+    "demo-hc-db-staging": {
+      "db_instance_id": "demo-hc-db-staging",
+      "avg_connections": 0.2,
+      "max_connections": 1,
+      "period_days": 7,
+      "is_idle": true
+    }
+  },
+  "cost_data": {
+    "monthly_costs": [
+      {
+        "period_start": "2025-11",
+        "total_cost": 345.80,
+        "services": [
+          {"service": "Amazon EC2", "cost": 178.20},
+          {"service": "Amazon RDS", "cost": 72.50},
+          {"service": "Amazon S3", "cost": 48.30},
+          {"service": "AWS Data Transfer", "cost": 28.50},
+          {"service": "Amazon CloudWatch", "cost": 18.30}
+        ]
+      },
+      {
+        "period_start": "2025-12",
+        "total_cost": 412.30,
+        "services": [
+          {"service": "Amazon EC2", "cost": 210.50},
+          {"service": "Amazon RDS", "cost": 85.20},
+          {"service": "Amazon S3", "cost": 51.60},
+          {"service": "AWS Data Transfer", "cost": 40.00},
+          {"service": "Amazon CloudWatch", "cost": 25.00}
+        ]
+      },
+      {
+        "period_start": "2026-01",
+        "total_cost": 485.60,
+        "services": [
+          {"service": "Amazon EC2", "cost": 248.30},
+          {"service": "Amazon RDS", "cost": 98.50},
+          {"service": "Amazon S3", "cost": 52.80},
+          {"service": "AWS Data Transfer", "cost": 45.20},
+          {"service": "Amazon CloudWatch", "cost": 18.30}
+        ]
+      }
+    ],
+    "currency": "USD",
+    "total_period_cost": 1243.70
+  },
+  "daily_costs": {
+    "daily_costs": [
+      {"date": "2026-01-20", "cost": 16.20},
+      {"date": "2026-01-19", "cost": 15.80},
+      {"date": "2026-01-18", "cost": 16.50},
+      {"date": "2026-01-17", "cost": 15.90},
+      {"date": "2026-01-16", "cost": 16.80},
+      {"date": "2026-01-15", "cost": 15.40},
+      {"date": "2026-01-14", "cost": 16.10},
+      {"date": "2026-01-13", "cost": 17.20},
+      {"date": "2026-01-12", "cost": 15.60},
+      {"date": "2026-01-11", "cost": 16.30},
+      {"date": "2026-01-10", "cost": 15.50},
+      {"date": "2026-01-09", "cost": 16.70},
+      {"date": "2026-01-08", "cost": 15.30},
+      {"date": "2026-01-07", "cost": 16.40},
+      {"date": "2026-01-06", "cost": 15.70},
+      {"date": "2026-01-05", "cost": 16.60},
+      {"date": "2026-01-04", "cost": 15.20},
+      {"date": "2026-01-03", "cost": 16.00},
+      {"date": "2026-01-02", "cost": 15.80},
+      {"date": "2026-01-01", "cost": 16.10},
+      {"date": "2025-12-31", "cost": 14.50},
+      {"date": "2025-12-30", "cost": 14.20},
+      {"date": "2025-12-29", "cost": 13.80},
+      {"date": "2025-12-28", "cost": 14.30},
+      {"date": "2025-12-27", "cost": 13.60},
+      {"date": "2025-12-26", "cost": 14.10},
+      {"date": "2025-12-25", "cost": 13.90},
+      {"date": "2025-12-24", "cost": 14.40},
+      {"date": "2025-12-23", "cost": 13.70},
+      {"date": "2025-12-22", "cost": 14.00}
+    ],
+    "period_days": 30
+  },
+  "service_breakdown": {
+    "period_days": 30,
+    "breakdown": [
+      {"service": "Amazon Elastic Compute Cloud", "cost": 248.30},
+      {"service": "Amazon Relational Database Service", "cost": 98.50},
+      {"service": "Amazon Simple Storage Service", "cost": 52.80},
+      {"service": "AWS Data Transfer", "cost": 45.20},
+      {"service": "Amazon Route 53", "cost": 12.50},
+      {"service": "Amazon CloudWatch", "cost": 18.30},
+      {"service": "AWS Key Management Service", "cost": 10.00}
+    ],
+    "total_cost": 485.60
+  },
+  "region_breakdown": {
+    "period_days": 30,
+    "regions": [
+      {"region": "ap-south-1", "cost": 410.20},
+      {"region": "us-east-1", "cost": 55.40},
+      {"region": "eu-west-1", "cost": 20.00}
+    ],
+    "total_cost": 485.60
+  }
+}

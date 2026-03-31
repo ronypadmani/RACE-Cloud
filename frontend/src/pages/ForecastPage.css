@@ -1,0 +1,257 @@
+/* =================================================================
+   ForecastPage.css — Cost Forecasting & Budget Alert page
+   Matches existing DashboardPage styling conventions
+   ================================================================= */
+
+.forecast-page {
+  max-width: 1240px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.forecast-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.forecast-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--gray-900);
+  margin-bottom: 2px;
+  letter-spacing: -0.4px;
+}
+
+/* ── Budget Alert Banners ──────────────────────────────────── */
+.budget-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.budget-alert.alert-high {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.budget-alert.alert-medium {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1px solid #fcd34d;
+  color: #92400e;
+}
+
+.budget-alert .alert-icon {
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.budget-alert strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.budget-alert p {
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ── KPI Grid ──────────────────────────────────────────────── */
+.forecast-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.forecast-kpi-grid .kpi-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 22px 24px;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.forecast-kpi-grid .kpi-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.icon-purple { background: #ede9fe; }
+.icon-red    { background: #fee2e2; }
+
+/* ── Budget Card ───────────────────────────────────────────── */
+.forecast-row {
+  margin-bottom: 20px;
+}
+
+.budget-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.budget-form {
+  margin-top: 16px;
+}
+
+.budget-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+}
+
+.input-prefix {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-500);
+}
+
+.budget-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--gray-900);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.budget-input:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ── Progress Bar ──────────────────────────────────────────── */
+.budget-progress-section {
+  margin-top: 24px;
+}
+
+.budget-progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 8px;
+}
+
+.budget-progress-track {
+  width: 100%;
+  height: 14px;
+  background: var(--gray-100);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.budget-progress-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+
+.fill-ok      { background: linear-gradient(90deg, #10b981, #34d399); }
+.fill-warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.fill-danger  { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+.budget-progress-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.budget-pct {
+  font-weight: 700;
+}
+
+.pct-ok      { color: #059669; }
+.pct-warning { color: #d97706; }
+.pct-danger  { color: #dc2626; }
+
+.budget-remaining {
+  color: var(--gray-500);
+}
+
+/* ── Chart Card ────────────────────────────────────────────── */
+.forecast-page .chart-card {
+  background: var(--white);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+}
+
+/* ── Anomaly Table ─────────────────────────────────────────── */
+.anomaly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.anomaly-table th {
+  background: var(--gray-50);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--gray-600);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.anomaly-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.anomaly-table tr:hover {
+  background: var(--gray-50);
+}
+
+.cost-cell {
+  font-weight: 600;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* ── Alerts ────────────────────────────────────────────────── */
+.alert.alert-success {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .forecast-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .forecast-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+  .budget-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

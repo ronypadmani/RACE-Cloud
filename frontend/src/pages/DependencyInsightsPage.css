@@ -1,0 +1,209 @@
+/* =================================================================
+   DependencyInsightsPage.css — Waste chain cards & simulation UI
+   ================================================================= */
+
+.dependency-page {
+  max-width: 960px;
+  animation: fadeIn 0.3s ease;
+}
+
+.dependency-page .page-header {
+  margin-bottom: 24px;
+}
+
+.dependency-page .page-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--gray-900);
+  letter-spacing: -0.4px;
+  margin-bottom: 2px;
+}
+
+.dependency-page .page-header p {
+  color: var(--gray-500);
+  font-size: 14px;
+}
+
+/* ── Chain Cards ───────────────────────────────────────────── */
+.chain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chain-card {
+  border-left: 4px solid var(--gray-300);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.chain-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.chain-card.impact-high {
+  border-left-color: var(--danger-500);
+}
+
+.chain-card.impact-medium {
+  border-left-color: var(--warning-500);
+}
+
+.chain-card.impact-low {
+  border-left-color: var(--primary-500);
+}
+
+/* Header row */
+.chain-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.chain-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chain-type {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--gray-800);
+}
+
+.chain-waste {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--danger-500);
+}
+
+/* Trigger line */
+.chain-trigger {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-bottom: 12px;
+}
+
+/* ── Resource chips ────────────────────────────────────────── */
+.chain-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.resource-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.resource-icon {
+  font-size: 15px;
+}
+
+.resource-type {
+  font-weight: 700;
+  color: var(--gray-700);
+}
+
+.resource-id {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  color: var(--primary-600);
+  background: var(--primary-50, #eff6ff);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.resource-detail {
+  color: var(--gray-400);
+  font-size: 12px;
+}
+
+/* Recommendation text */
+.chain-recommendation {
+  font-size: 14px;
+  color: var(--gray-700);
+  background: var(--gray-50, #f8fafc);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* ── Simulation result ─────────────────────────────────────── */
+.chain-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sim-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sim-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--gray-100);
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-width: 90px;
+}
+
+.sim-box.current {
+  background: #fef2f2;
+}
+
+.sim-box.projected {
+  background: #f0fdf4;
+}
+
+.sim-box.savings {
+  background: #eff6ff;
+}
+
+.sim-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  margin-bottom: 2px;
+}
+
+.sim-value {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gray-900);
+}
+
+.sim-box.savings .sim-value {
+  color: var(--success-600, #16a34a);
+}
+
+.sim-box.current .sim-value {
+  color: var(--danger-500);
+}
+
+.sim-arrow {
+  font-size: 20px;
+  color: var(--gray-400);
+}
+
+.sim-error {
+  color: var(--danger-500);
+  font-size: 13px;
+}

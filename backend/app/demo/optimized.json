@@ -1,0 +1,213 @@
+{
+  "ec2_instances": [
+    {
+      "instance_id": "i-demo-opt-001",
+      "name": "web-server-prod",
+      "instance_type": "t3.medium",
+      "state": "running",
+      "launch_time": "2025-12-01T08:00:00Z",
+      "availability_zone": "ap-south-1a",
+      "public_ip": "13.233.45.67",
+      "private_ip": "172.31.10.5",
+      "platform": "Linux",
+      "monitoring": "enabled"
+    },
+    {
+      "instance_id": "i-demo-opt-002",
+      "name": "api-backend",
+      "instance_type": "t3.small",
+      "state": "running",
+      "launch_time": "2025-11-15T10:30:00Z",
+      "availability_zone": "ap-south-1b",
+      "public_ip": "13.233.55.89",
+      "private_ip": "172.31.11.20",
+      "platform": "Linux",
+      "monitoring": "enabled"
+    }
+  ],
+  "ebs_volumes": [
+    {
+      "volume_id": "vol-demo-opt-001",
+      "state": "in-use",
+      "size_gb": 30,
+      "volume_type": "gp3",
+      "attached_to": "i-demo-opt-001",
+      "attachments": [{"instance_id": "i-demo-opt-001"}],
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-12-01T08:00:00Z",
+      "encrypted": true
+    },
+    {
+      "volume_id": "vol-demo-opt-002",
+      "state": "in-use",
+      "size_gb": 20,
+      "volume_type": "gp3",
+      "attached_to": "i-demo-opt-002",
+      "attachments": [{"instance_id": "i-demo-opt-002"}],
+      "availability_zone": "ap-south-1b",
+      "create_time": "2025-11-15T10:30:00Z",
+      "encrypted": true
+    }
+  ],
+  "elastic_ips": [
+    {
+      "public_ip": "13.233.45.67",
+      "allocation_id": "eipalloc-demo-opt-001",
+      "association_id": "eipassoc-demo-opt-001",
+      "instance_id": "i-demo-opt-001",
+      "is_associated": true,
+      "domain": "vpc"
+    }
+  ],
+  "s3_buckets": [
+    {
+      "bucket_name": "demo-app-assets-prod",
+      "creation_date": "2025-10-01T00:00:00Z",
+      "region": "ap-south-1",
+      "size_bytes": 524288000,
+      "size_gb": 0.49,
+      "object_count": 1250
+    }
+  ],
+  "rds_instances": [
+    {
+      "db_instance_id": "demo-db-prod",
+      "db_instance_class": "db.t3.micro",
+      "engine": "mysql",
+      "engine_version": "8.0.35",
+      "status": "available",
+      "multi_az": false,
+      "storage_gb": 20,
+      "storage_type": "gp3",
+      "endpoint": "demo-db-prod.abc123.ap-south-1.rds.amazonaws.com",
+      "port": 3306,
+      "availability_zone": "ap-south-1a",
+      "create_time": "2025-10-15T12:00:00Z"
+    }
+  ],
+  "cpu_metrics": {
+    "i-demo-opt-001": {
+      "instance_id": "i-demo-opt-001",
+      "avg_cpu": 42.5,
+      "max_cpu": 78.3,
+      "datapoints": 336,
+      "period_days": 14
+    },
+    "i-demo-opt-002": {
+      "instance_id": "i-demo-opt-002",
+      "avg_cpu": 28.1,
+      "max_cpu": 55.9,
+      "datapoints": 336,
+      "period_days": 14
+    }
+  },
+  "s3_access": {
+    "demo-app-assets-prod": {
+      "bucket_name": "demo-app-assets-prod",
+      "total_requests_90d": 45000,
+      "days_since_last_access": 0,
+      "is_cold": false
+    }
+  },
+  "rds_connections": {
+    "demo-db-prod": {
+      "db_instance_id": "demo-db-prod",
+      "avg_connections": 12.5,
+      "max_connections": 28,
+      "period_days": 7,
+      "is_idle": false
+    }
+  },
+  "cost_data": {
+    "monthly_costs": [
+      {
+        "period_start": "2025-11",
+        "total_cost": 34.80,
+        "services": [
+          {"service": "Amazon EC2", "cost": 20.50},
+          {"service": "Amazon RDS", "cost": 7.80},
+          {"service": "Amazon S3", "cost": 3.20},
+          {"service": "AWS Data Transfer", "cost": 2.30},
+          {"service": "Amazon Route 53", "cost": 1.00}
+        ]
+      },
+      {
+        "period_start": "2025-12",
+        "total_cost": 36.20,
+        "services": [
+          {"service": "Amazon EC2", "cost": 21.50},
+          {"service": "Amazon RDS", "cost": 8.00},
+          {"service": "Amazon S3", "cost": 3.40},
+          {"service": "AWS Data Transfer", "cost": 2.50},
+          {"service": "Amazon Route 53", "cost": 0.80}
+        ]
+      },
+      {
+        "period_start": "2026-01",
+        "total_cost": 38.50,
+        "services": [
+          {"service": "Amazon EC2", "cost": 22.50},
+          {"service": "Amazon RDS", "cost": 8.20},
+          {"service": "Amazon S3", "cost": 3.50},
+          {"service": "AWS Data Transfer", "cost": 2.80},
+          {"service": "Amazon Route 53", "cost": 1.50}
+        ]
+      }
+    ],
+    "currency": "USD",
+    "total_period_cost": 109.50
+  },
+  "daily_costs": {
+    "daily_costs": [
+      {"date": "2026-01-20", "cost": 1.25},
+      {"date": "2026-01-19", "cost": 1.28},
+      {"date": "2026-01-18", "cost": 1.22},
+      {"date": "2026-01-17", "cost": 1.30},
+      {"date": "2026-01-16", "cost": 1.18},
+      {"date": "2026-01-15", "cost": 1.24},
+      {"date": "2026-01-14", "cost": 1.26},
+      {"date": "2026-01-13", "cost": 1.21},
+      {"date": "2026-01-12", "cost": 1.27},
+      {"date": "2026-01-11", "cost": 1.29},
+      {"date": "2026-01-10", "cost": 1.23},
+      {"date": "2026-01-09", "cost": 1.25},
+      {"date": "2026-01-08", "cost": 1.20},
+      {"date": "2026-01-07", "cost": 1.26},
+      {"date": "2026-01-06", "cost": 1.24},
+      {"date": "2026-01-05", "cost": 1.22},
+      {"date": "2026-01-04", "cost": 1.28},
+      {"date": "2026-01-03", "cost": 1.19},
+      {"date": "2026-01-02", "cost": 1.25},
+      {"date": "2026-01-01", "cost": 1.27},
+      {"date": "2025-12-31", "cost": 1.20},
+      {"date": "2025-12-30", "cost": 1.18},
+      {"date": "2025-12-29", "cost": 1.22},
+      {"date": "2025-12-28", "cost": 1.24},
+      {"date": "2025-12-27", "cost": 1.21},
+      {"date": "2025-12-26", "cost": 1.19},
+      {"date": "2025-12-25", "cost": 1.17},
+      {"date": "2025-12-24", "cost": 1.23},
+      {"date": "2025-12-23", "cost": 1.20},
+      {"date": "2025-12-22", "cost": 1.22}
+    ],
+    "period_days": 30
+  },
+  "service_breakdown": {
+    "period_days": 30,
+    "breakdown": [
+      {"service": "Amazon Elastic Compute Cloud", "cost": 22.50},
+      {"service": "Amazon Relational Database Service", "cost": 8.20},
+      {"service": "Amazon Simple Storage Service", "cost": 3.50},
+      {"service": "AWS Data Transfer", "cost": 2.80},
+      {"service": "Amazon Route 53", "cost": 1.50}
+    ],
+    "total_cost": 38.50
+  },
+  "region_breakdown": {
+    "period_days": 30,
+    "regions": [
+      {"region": "ap-south-1", "cost": 38.50}
+    ],
+    "total_cost": 38.50
+  }
+}
