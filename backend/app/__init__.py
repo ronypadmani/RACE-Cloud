@@ -26,7 +26,11 @@ def create_app():
     _dotenv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env')
     load_dotenv(dotenv_path=_dotenv_path)
 
-    app = Flask(__name__, instance_relative_config=True)
+    # On Vercel the filesystem is read-only except /tmp,
+    # so redirect Flask's instance_path there.
+    _on_vercel = os.getenv('VERCEL', '')
+    _instance = '/tmp/instance' if _on_vercel else None
+    app = Flask(__name__, instance_path=_instance, instance_relative_config=True)
 
     # ── Configuration ──────────────────────────────────────────
     app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-secret-change-me')
