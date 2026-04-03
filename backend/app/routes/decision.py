@@ -149,6 +149,11 @@ def record_behavior():
             "UPDATE recommendations SET status = 'DISMISSED' WHERE id = ? AND user_id = ?",
             (recommendation_id, user_id)
         )
+    elif action_type == 'applied' and recommendation_id:
+        execute_db(
+            "UPDATE recommendations SET status = 'RESOLVED' WHERE id = ? AND user_id = ?",
+            (recommendation_id, user_id)
+        )
 
     return jsonify({'message': 'Behavior recorded'}), 201
 
@@ -186,6 +191,13 @@ def ai_suggest():
     if priority not in ('cheap', 'balanced', 'performance'):
         priority = 'balanced'
 
+    # ── Parse optional region ──────────────────────────────────
+    preferred_region = body.get('region', '').strip().lower() or None
+    # Validate against known regions
+    valid_regions = {'us-east-1', 'us-west-2', 'eu-west-1', 'ap-south-1', 'ap-southeast-1'}
+    if preferred_region and preferred_region not in valid_regions:
+        preferred_region = None
+
     # ── Check cache ────────────────────────────────────────────
     ihash = _input_hash(user_input)
     cached = query_db(
@@ -198,7 +210,9 @@ def ai_suggest():
         try:
             ai_data = json.loads(cached['ai_response'])
             cost_data = json.loads(cached['cost_analysis'])
-            if abs(cost_data.get('budget', 100) - budget) <= 1:
+            cached_region = cost_data.get('selected_region', 'auto')
+            request_region = preferred_region or 'auto'
+            if abs(cost_data.get('budget', 100) - budget) <= 1 and cached_region == request_region:
                 # Fetch top_actions for the full response
                 top_actions = _get_top_actions(user_id)
                 return jsonify({
@@ -212,6 +226,8 @@ def ai_suggest():
                     'confidence': ai_data.get('confidence', 70),
                     'pricing_source': cost_data.get('pricing_source', 'estimated'),
                     'ai_provider': ai_data.get('ai_provider', 'cached'),
+                    'selected_region': cost_data.get('selected_region', 'auto'),
+                    'available_regions': cost_data.get('available_regions', []),
                     'cached': True,
                 }), 200
         except (json.JSONDecodeError, TypeError):
@@ -245,6 +261,7 @@ def ai_suggest():
             budget=budget,
             estimated_usage=ai_data.get('estimated_usage'),
             client_factory=client_factory,
+            preferred_region=preferred_region,
         )
     except Exception as e:
         current_app.logger.error(f'Cost engine error: {e}')
@@ -279,6 +296,8 @@ def ai_suggest():
         'confidence': ai_data.get('confidence', 70),
         'pricing_source': cost_data.get('pricing_source', 'estimated'),
         'ai_provider': ai_data.get('ai_provider', 'unknown'),
+        'selected_region': cost_data.get('selected_region', 'auto'),
+        'available_regions': cost_data.get('available_regions', []),
         'cached': False,
     }), 200
 

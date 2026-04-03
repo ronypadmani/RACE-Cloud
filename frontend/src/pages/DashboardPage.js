@@ -5,6 +5,7 @@ import {
   PieChart, Pie, Cell, AreaChart, Area
 } from 'recharts';
 import { awsAPI, analysisAPI, forecastAPI } from '../services/api';
+import dashboardEvents from '../services/dashboardEvents';
 import './DashboardPage.css';
 
 const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899', '#6366f1'];
@@ -82,10 +83,27 @@ export default function DashboardPage() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  /* ── Auto-refresh when recommendations change on another page ── */
+  useEffect(() => {
+    const refresh = () => fetchData();
+    dashboardEvents.on('recommendations-changed', refresh);
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') fetchData();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      dashboardEvents.off('recommendations-changed', refresh);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [fetchData]);
+
   const runAnalysis = async () => {
     setAnalyzing(true);
     try {
       await analysisAPI.runAnalysis();
+      dashboardEvents.emit('recommendations-changed', { refresh: true });
       await fetchData();
     } catch (err) {
       setError('Analysis failed. Check your AWS credentials.');

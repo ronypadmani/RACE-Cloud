@@ -7,13 +7,22 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from typing import Optional
 
 logger = logging.getLogger(__name__)
 
 # ── Regions for multi-option comparison ────────────────────────────────────────
 
-REGIONS = ['ap-south-1', 'us-east-1', 'eu-west-1']
+REGIONS = ['ap-south-1', 'us-east-1', 'us-west-2', 'eu-west-1', 'ap-southeast-1']
+
+ALL_REGIONS = {
+    'us-east-1': 'US East (N. Virginia)',
+    'us-west-2': 'US West (Oregon)',
+    'eu-west-1': 'EU (Ireland)',
+    'ap-south-1': 'Asia Pacific (Mumbai)',
+    'ap-southeast-1': 'Asia Pacific (Singapore)',
+}
 
 # ── Tier configuration ─────────────────────────────────────────────────────────
 
@@ -226,6 +235,26 @@ _FALLBACK_PRICES: dict[str, dict[str, float]] = {
         'Kinesis': 14.00, 'Redshift': 195.00, 'Athena': 5.00,
         'Glue': 4.40, 'Bedrock': 3.00, 'AppSync': 0.40,
     },
+    'us-west-2': {
+        'EC2': 8.50, 'S3': 0.55, 'Lambda': 0.20, 'RDS': 14.00,
+        'CloudFront': 1.10, 'DynamoDB': 1.30, 'ElastiCache': 13.00,
+        'SageMaker': 28.00, 'ECS': 11.00, 'API Gateway': 0.55,
+        'EBS': 1.10, 'SNS': 0.10, 'SQS': 0.10, 'Route 53': 0.50,
+        'Cognito': 0.00, 'CloudWatch': 0.30, 'EKS': 73.00,
+        'Fargate': 9.50, 'Step Functions': 0.25, 'EventBridge': 0.10,
+        'Kinesis': 13.00, 'Redshift': 180.00, 'Athena': 5.00,
+        'Glue': 4.40, 'Bedrock': 3.00, 'AppSync': 0.40,
+    },
+    'ap-southeast-1': {
+        'EC2': 8.80, 'S3': 0.55, 'Lambda': 0.20, 'RDS': 14.50,
+        'CloudFront': 1.15, 'DynamoDB': 1.35, 'ElastiCache': 13.50,
+        'SageMaker': 29.00, 'ECS': 11.50, 'API Gateway': 0.55,
+        'EBS': 1.10, 'SNS': 0.10, 'SQS': 0.10, 'Route 53': 0.50,
+        'Cognito': 0.00, 'CloudWatch': 0.30, 'EKS': 73.00,
+        'Fargate': 10.00, 'Step Functions': 0.25, 'EventBridge': 0.10,
+        'Kinesis': 13.50, 'Redshift': 185.00, 'Athena': 5.00,
+        'Glue': 4.40, 'Bedrock': 3.00, 'AppSync': 0.40,
+    },
 }
 
 
@@ -233,15 +262,33 @@ def _get_live_prices(services: list[str], region: str, tier: str,
                      client_factory) -> Optional[dict[str, float]]:
     """
     Attempt to fetch real prices from AWS Pricing API.
+    Uses user credentials (client_factory) first, then falls back to global
+    AWS_PRICING_ACCESS_KEY / AWS_PRICING_SECRET_KEY from .env.
     Returns a dict {service: monthly_cost} or None if unavailable.
     """
     try:
-        # Pricing API is only in us-east-1 / ap-south-1
         import boto3
+
+        # ── Resolve credentials: per-user → global env ────────
+        access_key = None
+        secret_key = None
+
+        if client_factory:
+            access_key = client_factory._access_key
+            secret_key = client_factory._secret_key
+
+        if not access_key or not secret_key:
+            access_key = os.getenv('AWS_PRICING_ACCESS_KEY', '').strip()
+            secret_key = os.getenv('AWS_PRICING_SECRET_KEY', '').strip()
+
+        if not access_key or not secret_key:
+            return None
+
+        # Pricing API is only in us-east-1 / ap-south-1
         pricing = boto3.client(
             'pricing',
-            aws_access_key_id=client_factory._access_key,
-            aws_secret_access_key=client_factory._secret_key,
+            aws_access_key_id=access_key,
+            aws_secret_access_key=secret_key,
             region_name='us-east-1',
         )
         # Quick probe
@@ -289,7 +336,7 @@ def _get_service_cost(
     Returns (total, per_service_breakdown, used_live_pricing).
     """
     live_prices = None
-    if client_factory:
+    if client_factory or (os.getenv('AWS_PRICING_ACCESS_KEY', '').strip() and os.getenv('AWS_PRICING_SECRET_KEY', '').strip()):
         live_prices = _get_live_prices(services, region, tier, client_factory)
 
     fallback = _FALLBACK_PRICES.get(region, _FALLBACK_PRICES['us-east-1'])
@@ -335,24 +382,33 @@ def calculate_cost_options(
     budget: float = 100.0,
     estimated_usage: dict | None = None,
     client_factory=None,
+    preferred_region: str | None = None,
 ) -> dict:
     """
     Generate 3 cost tiers (Cheap/Balanced/Performance) with per-region comparison.
+
+    Parameters
+    ----------
+    preferred_region : str, optional
+        If provided, all 3 tiers are calculated in this single region.
+        Otherwise each tier uses its default region from TIER_CONFIG.
 
     Returns
     -------
     dict with keys:
         options: list of 3 tier dicts (each with breakdown)
-        region_comparison: list of costs across all 3 regions
+        region_comparison: list of costs across all regions
         cheapest_cost, highest_cost, budget, within_budget
         pricing_source: 'live' | 'estimated'
+        selected_region: the region used (or 'auto')
+        available_regions: list of selectable regions
     """
     estimated_usage = estimated_usage or {'compute_hours': 0, 'storage_gb': 0, 'requests': 0}
     options: list[dict] = []
     any_live = False
 
     for tier, cfg in TIER_CONFIG.items():
-        region = cfg['region']
+        region = preferred_region if preferred_region else cfg['region']
         total, breakdown, is_live = _get_service_cost(
             services, region, tier, estimated_usage, client_factory,
         )
@@ -371,7 +427,7 @@ def calculate_cost_options(
             'services': services,
         })
 
-    # Region comparison — show each tier's cost in all 3 regions
+    # Region comparison — show each tier's cost in all regions
     region_comparison: list[dict] = []
     for region in REGIONS:
         costs: dict[str, float] = {}
@@ -393,4 +449,6 @@ def calculate_cost_options(
         'budget': budget,
         'within_budget': cheapest <= budget,
         'pricing_source': 'live' if any_live else 'estimated',
+        'selected_region': preferred_region or 'auto',
+        'available_regions': list(ALL_REGIONS.items()),
     }

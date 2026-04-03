@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { analysisAPI } from '../services/api';
+import dashboardEvents from '../services/dashboardEvents';
 import './RecommendationsPage.css';
 
 export default function RecommendationsPage() {
@@ -21,6 +22,7 @@ export default function RecommendationsPage() {
     setAnalyzing(true);
     try {
       await analysisAPI.runAnalysis();
+      dashboardEvents.emit('recommendations-changed', { refresh: true });
       fetchData();
     } catch {
     } finally {
@@ -31,6 +33,7 @@ export default function RecommendationsPage() {
   const dismissRec = async (id) => {
     try {
       await analysisAPI.dismissRecommendation(id);
+      dashboardEvents.emit('recommendations-changed', { dismissed: id });
       fetchData();
     } catch {}
   };

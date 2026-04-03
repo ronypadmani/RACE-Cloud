@@ -1,13 +1,16 @@
 """
 Rule Engine — discovers, loads, and executes optimization rules.
-Simplified to essential rules (idle EC2, unused EBS, cost alerts).
+Covers EC2, EBS, EIP, S3, RDS and cost alerts.
 """
 import logging
 from typing import List, Dict
 from .base_rule import BaseRule, RuleResult
-from .ec2_rules import IdleEC2Rule
-from .ebs_rules import UnusedEBSRule
+from .ec2_rules import IdleEC2Rule, UnderutilizedEC2Rule, OversizedEC2Rule, OldGenEC2Rule
+from .ebs_rules import UnusedEBSRule, GP2ToGP3Rule
 from .cost_rules import HighMonthlyCostRule
+from .eip_rules import UnassociatedEIPRule
+from .s3_rules import S3ColdDataRule
+from .rds_rules import IdleRDSRule
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +28,23 @@ class RuleEngine:
         self._register_default_rules()
 
     def _register_default_rules(self):
-        """Register essential optimization rules."""
+        """Register all optimization rules."""
         self._rules = [
+            # EC2 rules
             IdleEC2Rule(),              # CPU < 2% — high savings
+            UnderutilizedEC2Rule(),     # CPU 2–10% — downsize candidate
+            OversizedEC2Rule(),         # Large+ with low CPU — oversized
+            OldGenEC2Rule(),            # Old-gen family (t2, m4, c4, …)
+            # EBS rules
             UnusedEBSRule(),            # Unattached EBS — easy win
+            GP2ToGP3Rule(),             # gp2 → gp3 upgrade
+            # EIP rules
+            UnassociatedEIPRule(),      # Unused Elastic IPs
+            # S3 rules
+            S3ColdDataRule(),           # Cold buckets → Glacier
+            # RDS rules
+            IdleRDSRule(),              # Zero-connection databases
+            # Cost rules
             HighMonthlyCostRule(),      # Monthly cost alert
         ]
 

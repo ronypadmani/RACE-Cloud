@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { decisionAPI, analysisAPI, demoAPI } from '../services/api';
+import dashboardEvents from '../services/dashboardEvents';
 import './DecisionDashboard.css';
 
 const RESOURCE_ICONS = {
@@ -22,6 +23,15 @@ const PRIORITIES = [
   { value: 'cheap', label: '💰 Cost', desc: 'Minimize spending' },
   { value: 'balanced', label: '⚖️ Balanced', desc: 'Best trade-off' },
   { value: 'performance', label: '🚀 Performance', desc: 'Max scalability' },
+];
+
+const AWS_REGIONS = [
+  { value: '', label: '🌍 Auto (best per tier)' },
+  { value: 'us-east-1', label: '🇺🇸 US East (N. Virginia)' },
+  { value: 'us-west-2', label: '🇺🇸 US West (Oregon)' },
+  { value: 'eu-west-1', label: '🇪🇺 EU (Ireland)' },
+  { value: 'ap-south-1', label: '🇮🇳 Asia Pacific (Mumbai)' },
+  { value: 'ap-southeast-1', label: '🇸🇬 Asia Pacific (Singapore)' },
 ];
 
 const AI_PROVIDER_LABEL = {
@@ -49,6 +59,7 @@ export default function DecisionDashboard() {
   const [aiInput, setAiInput] = useState('');
   const [aiBudget, setAiBudget] = useState(100);
   const [aiPriority, setAiPriority] = useState('balanced');
+  const [aiRegion, setAiRegion] = useState('');
   const [aiResult, setAiResult] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState('');
@@ -62,6 +73,13 @@ export default function DecisionDashboard() {
   }, []);
 
   useEffect(() => { fetchPlan(); }, [fetchPlan]);
+
+  /* ── Auto-refresh when recommendations change on another page ── */
+  useEffect(() => {
+    const refresh = () => fetchPlan();
+    dashboardEvents.on('recommendations-changed', refresh);
+    return () => dashboardEvents.off('recommendations-changed', refresh);
+  }, [fetchPlan]);
 
   useEffect(() => {
     demoAPI.getStatus()
@@ -79,6 +97,7 @@ export default function DecisionDashboard() {
     try {
       await demoAPI.switchScenario(scenario);
       await analysisAPI.runAnalysis();
+      dashboardEvents.emit('recommendations-changed', { scenario });
       fetchPlan();
     } catch {} finally { setAnalyzing(false); }
   };
@@ -87,6 +106,7 @@ export default function DecisionDashboard() {
     setAnalyzing(true);
     try {
       await analysisAPI.runAnalysis();
+      dashboardEvents.emit('recommendations-changed', { refresh: true });
       fetchPlan();
     } catch {} finally { setAnalyzing(false); }
   };
@@ -99,6 +119,7 @@ export default function DecisionDashboard() {
         action_type: actionType,
       });
       setActioned(prev => ({ ...prev, [action.recommendation_id]: actionType }));
+      dashboardEvents.emit('recommendations-changed', { rule_id: action.rule_id, actionType });
       if (actionType === 'dismissed') setTimeout(fetchPlan, 400);
     } catch {}
   };
@@ -113,6 +134,7 @@ export default function DecisionDashboard() {
         user_input: aiInput.trim(),
         budget: aiBudget,
         priority: aiPriority,
+        region: aiRegion,
       });
       setAiResult(res.data);
     } catch (err) {
@@ -355,6 +377,19 @@ export default function DecisionDashboard() {
               </div>
             </div>
 
+            <div className="ai-control">
+              <label className="ai-label">AWS Region</label>
+              <select
+                className="ai-region-select"
+                value={aiRegion}
+                onChange={e => setAiRegion(e.target.value)}
+              >
+                {AWS_REGIONS.map(r => (
+                  <option key={r.value} value={r.value}>{r.label}</option>
+                ))}
+              </select>
+            </div>
+
             <button className="btn btn-primary ai-generate-btn"
               onClick={generateAI}
               disabled={aiLoading || !aiInput.trim()}>
@@ -401,6 +436,12 @@ export default function DecisionDashboard() {
                 <span className="ai-meta-label">Pricing</span>
                 <span className="ai-meta-value">
                   {aiResult.pricing_source === 'live' ? '🟢 Live AWS' : '🔵 Estimated'}
+                </span>
+              </div>
+              <div className="ai-meta-item">
+                <span className="ai-meta-label">Region</span>
+                <span className="ai-meta-value">
+                  {aiResult.selected_region === 'auto' ? '🌍 Auto' : `📍 ${aiResult.selected_region}`}
                 </span>
               </div>
               <div className="ai-meta-item">
